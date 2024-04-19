@@ -1,11 +1,9 @@
-import Employee from "../models/Employee.js";
-import Project from "../models/Project.js";
 import ProjectAssignment from "../models/ProjectAssignment.js";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const uri = process.env.CONECTION_URL;
+const uri = process.env.CONNECTION_URL;
 
 
 export const connectDB = async () => {
@@ -17,20 +15,14 @@ export const connectDB = async () => {
     }
 };
 
-export const getData = async (req, res) => {
+export const getData = async () => {
     try{
         const aggregate = await ProjectAssignment.aggregate([
             {
                 $lookup: {
                     from: 'Employee',
-                    let: { employeeId: { $toObjectId: '$employee_id' } },
-                    pipeline: [
-                        {
-                            $match: {
-                                $expr: { $eq: ['$_id', '$$employeeId'] }
-                            }
-                        }
-                    ],
+                    localField: 'employee_id',
+                    foreignField: '_id',
                     as: 'employee'
                 }
             },
@@ -42,7 +34,7 @@ export const getData = async (req, res) => {
                     as: 'project'
                 }
             }
-        ]);
+        ])
         return aggregate;
     }catch(error){
         console.error('Error getting data:', error);

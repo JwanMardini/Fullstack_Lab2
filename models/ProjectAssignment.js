@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const projectAssignmentSchema = new mongoose.Schema({
-    employee_id: {type: String, required: true},
+    employee_id: {type: mongoose.Schema.Types.ObjectId, required: true},
     project_code: {type: String, required: true},
     start_date: {type: Date, required: true},
 }, { collection: 'ProjectAssignment' });
