@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-async function fetchData() {
+const fetchData = async () => {
     try {
-        const response = await fetch('http://localhost:3000/api');
-        console.log(response);
-        // Check if the response is not ok
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        return data;
+        const response = await axios.get("http://localhost:3000/api");
+        return response.data;
     } catch (error) {
         console.error('Error fetching data:', error);
     }
-}
+};
+
 
 function Table() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const fetchDataAsync = async () => {
-            const d = await fetchData();
-            setData(d);
-        };
-        fetchDataAsync();
+        fetchData().then((data) => {
+            setData(data);
+        }).catch((error) => {
+            console.error('Error fetching data:', error);
+        }
+        );
     }, []);
 
     const sortByEmployeeID = () => {
