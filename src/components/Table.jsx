@@ -26,15 +26,43 @@ function Table() {
         fetchDataAsync();
     }, []);
 
+    const sortByEmployeeID = () => {
+        const sorted = [...data].sort((a, b) => {
+            return a.employee[0]._id.localeCompare(b.employee[0]._id);
+        });
+        setData(sorted);
+    };
+    
+    const sortByEmployeeName = () => {
+        const sorted = [...data].sort((a, b) => {
+            return a.employee[0].full_name.localeCompare(b.employee[0].full_name);
+        });
+        setData(sorted);
+    };
+
+    const sortByProjectName = () => {
+        const sorted = [...data].sort((a, b) => {
+            return a.project[0].project_name.localeCompare(b.project[0].project_name);
+        });
+        setData(sorted);
+    };
+
+    const sortByDate = () => {
+        const sorted = [...data].sort((a, b) => {
+            return new Date(a.start_date) - new Date(b.start_date);
+        });
+        setData(sorted);
+    };
+
     return (
         <>
             <table>
                 <thead>
                     <tr>
-                        <th>E_ID</th>
-                        <th>E_name</th>
-                        <th>Project Name</th>
-                        <th>Date</th>
+                        <th onClick={sortByEmployeeID}>E_ID</th>
+                        <th onClick={sortByEmployeeName} >E_name</th>
+                        <th onClick={sortByProjectName}>Project Name</th>
+                        <th onClick={sortByDate}>Date</th>
                     </tr>
                 </thead>
                 <tbody>
