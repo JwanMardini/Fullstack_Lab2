@@ -1,4 +1,6 @@
 import ProjectAssignment from "../models/ProjectAssignment.js";
+import Employee from "../models/Employee.js";
+import Project from "../models/Project.js";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -37,6 +39,52 @@ export const getData = async () => {
         ])
         return aggregate;
     }catch(error){
-        console.error('Error getting data:', error);
+        throw new Error('Error getting data:', error);
     }
 };
+
+
+export const addEmployee = async (employeeData) => {
+    try {
+        const checkEmployee = await Employee.findOne({email: employeeData.email});
+        if(checkEmployee){
+            throw new Error('Employee already exists');
+        }
+        const employeeAdded = await Employee.create(employeeData);
+        return employeeAdded;
+    } catch (error) {
+        throw new Error('Error adding employee:', error);
+    }
+}
+
+export const addProject = async (projectData) => {
+    try {
+        const projectAdded = await Project.create(projectData);
+        return projectAdded;
+    } catch (error) {
+        throw new Error('Error adding project:', error);
+    }
+        
+    
+}
+
+
+export const addProjectAssignment = async (projectAssignmentData) => {
+    try {
+        const checkEmployee = await Employee.findById(projectAssignmentData.employee_id);
+        if(!checkEmployee){
+            throw new Error('Employee not found');
+        }
+
+        const checkProject = await Project.findOne({project_code: projectAssignmentData.project_code});
+        if(!checkProject){
+            throw new Error('Project not found');
+        }
+        const projectAssignmentAdded = await ProjectAssignment.create(projectAssignmentData);
+        return projectAssignmentAdded;
+    } catch (error) {
+        throw new Error('Error adding project assignment:', error);
+    }
+            
+        
+}
