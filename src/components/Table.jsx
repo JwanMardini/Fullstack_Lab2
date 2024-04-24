@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { sortByEmployeeID, sortByEmployeeName, sortByProjectName, sortByDate } from "../utils/sortTable.js";
+import "./Table.css"
 
 const fetchData = async () => {
     try {
