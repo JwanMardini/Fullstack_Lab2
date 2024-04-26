@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { sortByEmployeeID, sortByEmployeeName, sortByProjectName, sortByDate } from "../utils/sortTable.js";
 import "./Table.css"
@@ -6,7 +6,7 @@ import "./Table.css"
 const fetchData = async () => {
     try {
         const response = await axios.get("http://localhost:3000/api");
-        return response.data;
+        return response.data.slice(-5);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -50,7 +50,7 @@ function Table() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((item, index) => (
+                    {data.map((item) => (
                         <tr key={item._id}>
                             <td>{item.employee[0]._id}</td>
                             <td>{item.employee[0].full_name}</td>

@@ -4,8 +4,8 @@ import apiRouter from './api/routes/api.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const app = express();
+// eslint-disable-next-line no-undef
 const port = process.env.PORT || 3000;
 
 app.use(cors());

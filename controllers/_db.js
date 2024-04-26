@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// eslint-disable-next-line no-undef
 const uri = process.env.CONNECTION_URL;
 
 
@@ -64,8 +65,6 @@ export const addProject = async (projectData) => {
     } catch (error) {
         throw new Error('Error adding project:', error);
     }
-        
-    
 }
 
 
@@ -85,6 +84,5 @@ export const addProjectAssignment = async (projectAssignmentData) => {
     } catch (error) {
         throw new Error('Error adding project assignment:', error);
     }
-            
-        
+
 }
